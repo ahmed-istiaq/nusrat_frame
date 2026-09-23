@@ -1,0 +1,815 @@
+<!DOCTYPE html><html class="dark overflow-x-hidden" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="web_standard" name="shell-type">
+<title>NUSRAT ✦ Frames Gallery</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Outfit:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#ffaedc",
+            "on-secondary-container": "#005267",
+            "outline-variant": "#54414b",
+            "primary-fixed": "#ffd8eb",
+            "surface-bright": "#3b3842",
+            "on-surface": "#e6e0ee",
+            secondary: "#98e1ff",
+            "secondary-container": "#00cbfc",
+            background: "#14121b",
+            tertiary: "#00e38e",
+            "primary-fixed-dim": "#ffaedc",
+            "surface-container": "#211e28",
+            "primary-container": "#ff71ce",
+            "surface-dim": "#14121b",
+            "on-secondary-fixed": "#001f29",
+            "on-tertiary-container": "#004528",
+            "surface-tint": "#ffaedc",
+            "on-primary-container": "#730058",
+            "tertiary-fixed-dim": "#00e38e",
+            "on-surface-variant": "#dabfcc",
+            "on-background": "#e6e0ee",
+            "surface-container-low": "#1c1a24",
+            "on-error": "#690005",
+            "tertiary-container": "#00bd76",
+            "on-tertiary-fixed-variant": "#005230",
+            "surface-container-highest": "#36333e",
+            "inverse-primary": "#a72683",
+            "on-primary-fixed": "#3b002c",
+            "on-error-container": "#ffdad6",
+            "inverse-on-surface": "#322f39",
+            "surface-variant": "#36333e",
+            "on-primary-fixed-variant": "#880068",
+            "surface-container-lowest": "#0f0d16",
+            "on-tertiary-fixed": "#002110",
+            "on-secondary": "#003544",
+            surface: "#14121b",
+            "secondary-fixed": "#b9eaff",
+            error: "#ffb4ab",
+            "surface-container-high": "#2b2933",
+            outline: "#a28a96",
+            "on-secondary-fixed-variant": "#004d62",
+            "on-primary": "#600049",
+            "tertiary-fixed": "#54ffaa",
+            "error-container": "#93000a",
+            "on-tertiary": "#003920",
+            "secondary-fixed-dim": "#58d5ff",
+            "inverse-surface": "#e6e0ee"
+          },
+          fontFamily: {
+            "headline-lg": ["Outfit"],
+            "label-lg": ["Outfit"],
+            "body-sm": ["Inter"],
+            "label-md": ["Outfit"],
+            "headline-md": ["Outfit"],
+            "title-md": ["Outfit"],
+            "label-sm": ["Outfit"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-sm": ["Outfit"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #0d0b14;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    @keyframes pulseOrb {
+      0%, 100% { transform: scale(1) translate(0px, 0px); opacity: 0.25; }
+      50% { transform: scale(1.15) translate(30px, -20px); opacity: 0.42; }
+    }
+    @keyframes pulseOrbAlt {
+      0%, 100% { transform: scale(1.1) translate(0px, 0px); opacity: 0.22; }
+      50% { transform: scale(0.95) translate(-40px, 25px); opacity: 0.38; }
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 0.95; transform: scale(1.2); }
+    }
+    .glow-orb-primary { animation: pulseOrb 14s ease-in-out infinite; }
+    .glow-orb-secondary { animation: pulseOrbAlt 18s ease-in-out infinite; }
+    .twinkle-fast { animation: twinkle 3s ease-in-out infinite; }
+    .twinkle-slow { animation: twinkle 5s ease-in-out infinite; }
+
+    .carousel-item {
+      pointer-events: auto !important;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: pan-y;
+      will-change: transform, opacity, filter;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), filter 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+    .card-inner {
+      will-change: transform, box-shadow;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .carousel-item:not(.active-card):hover {
+      opacity: 0.95 !important;
+      filter: brightness(1.12) !important;
+    }
+    .carousel-item:not(.active-card):hover .card-inner {
+      transform: scale(1.025);
+    }
+    #mobileDrawer {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #drawerBackdrop {
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+
+    /* Generous Clearance Stage & Natural Aspect Ratio Cards */
+    #carousel-stage {
+      height: 640px;
+      min-height: 590px;
+      max-height: 720px;
+      overflow-y: visible !important;
+    }
+    .card-inner {
+      height: 530px;
+      width: auto;
+      max-width: 82vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-inner img {
+      height: 100%;
+      width: auto;
+      max-width: 480px;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      #carousel-stage {
+        height: 490px !important;
+        min-height: 460px !important;
+        max-height: 530px !important;
+      }
+      .card-inner {
+        height: 400px !important;
+        max-height: 66vh !important;
+        max-width: 84vw !important;
+      }
+      .card-inner img {
+        max-width: 330px !important;
+      }
+    }
+    @media (min-width: 641px) and (max-width: 1024px) {
+      #carousel-stage {
+        height: 580px !important;
+        min-height: 530px !important;
+        max-height: 640px !important;
+      }
+      .card-inner {
+        height: 480px !important;
+      }
+      .card-inner img {
+        max-width: 410px !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-[#0b0a10] via-[#110f18] to-[#14121b] text-on-surface font-body-md min-h-screen relative overflow-x-hidden flex flex-col justify-between w-full selection:bg-primary-container selection:text-on-primary">
+<!-- Ambient Glow & Twinkle Background -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<div class="absolute -top-[12%] -left-[8%] w-[420px] sm:w-[580px] md:w-[700px] h-[420px] sm:h-[580px] md:h-[700px] rounded-full bg-primary-container/20 blur-[110px] md:blur-[140px] glow-orb-primary"></div>
+<div class="absolute top-[35%] -right-[10%] w-[400px] sm:w-[560px] md:w-[680px] h-[400px] sm:h-[560px] md:h-[680px] rounded-full bg-secondary-container/15 blur-[110px] md:blur-[150px] glow-orb-secondary"></div>
+<div class="absolute -bottom-[15%] left-[20%] w-[380px] sm:w-[520px] md:w-[600px] h-[380px] sm:h-[520px] md:h-[600px] rounded-full bg-tertiary-container/15 blur-[110px] md:blur-[140px] glow-orb-primary"></div>
+<div class="absolute top-[18%] left-[24%] w-1.5 h-1.5 rounded-full bg-primary-fixed shadow-[0_0_8px_#ffaedc] twinkle-fast"></div>
+<div class="absolute top-[32%] right-[28%] w-2 h-2 rounded-full bg-secondary shadow-[0_0_10px_#98e1ff] twinkle-slow"></div>
+<div class="absolute top-[68%] left-[12%] w-1 h-1 rounded-full bg-tertiary-fixed shadow-[0_0_6px_#54ffaa] twinkle-fast"></div>
+<div class="absolute top-[82%] right-[16%] w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_#ffaedc] twinkle-slow"></div>
+<div class="absolute top-[48%] left-[78%] w-1 h-1 rounded-full bg-secondary-fixed shadow-[0_0_6px_#b9eaff] twinkle-fast"></div>
+</div>
+<!-- Perfectly Centered Floating Navigation Bar -->
+<header class="h-14 sm:h-16 px-3.5 sm:px-space-md md:px-space-lg rounded-full bg-surface-container-low/85 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.65)] border border-outline-variant/30" style="position: fixed; top: 0.75rem; left: 50% !important; transform: translateX(-50%) !important; z-index: 50; width: min(92vw, 880px); max-width: 880px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center;">
+<div class="flex items-center gap-1 sm:gap-space-xs group">
+<a class="flex items-center gap-1.5 sm:gap-space-xs group" data-path="home" href="#">
+<span class="font-headline-sm text-base sm:text-lg md:text-headline-sm font-bold tracking-widest text-[#ff71ce] drop-shadow-[0_0_10px_rgba(255,113,206,0.6)] hover:drop-shadow-[0_0_14px_rgba(255,113,206,0.9)] hover:scale-105 transition-all duration-300 select-none cursor-pointer inline-block" style="color: rgb(255, 113, 206);">NUSRAT</span>
+<span class="text-tertiary text-xs sm:text-title-md font-headline-sm transition-transform group-hover:rotate-45 group-hover:scale-125 drop-shadow-[0_0_8px_rgba(0,227,142,0.6)]">✦</span>
+</a>
+</div>
+<nav class="hidden md:flex items-center gap-1 sm:gap-space-xs p-1 rounded-full bg-surface-container/70 shadow-inner">
+<a class="px-3 sm:px-space-md py-1 sm:py-space-xs rounded-full font-label-md sm:font-label-lg text-xs sm:text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all duration-200" data-path="home" href="https://ahmed-istiaq.github.io/nusrat_home/">Home</a>
+<a aria-current="page" class="px-3.5 sm:px-space-md py-1 sm:py-space-xs rounded-full transition-all duration-200 bg-primary-container text-on-primary font-bold text-xs sm:text-label-lg shadow-[0_0_20px_rgba(255,113,206,0.5)]" data-path="frames" href="#">Frames</a>
+<a class="px-3 sm:px-space-md py-1 sm:py-space-xs rounded-full font-label-md sm:font-label-lg text-xs sm:text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all duration-200" data-path="melodies" href="#">Melodies</a>
+</nav>
+<div class="hidden md:flex items-center gap-2 sm:gap-space-md">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-[0_0_16px_rgba(255,174,220,0.5)] cursor-pointer hover:scale-105 transition-transform" title="Profile">
+<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+</div>
+</div>
+<!-- Mobile Hamburger Button (<768px) -->
+<button aria-expanded="false" aria-label="Open mobile menu" class="flex md:hidden flex-col justify-center items-center w-10 h-10 px-2.5 py-2 rounded-2xl bg-surface-container/90 hover:bg-surface-container-high border border-outline-variant/40 hover:border-primary/50 text-on-surface transition-all duration-300 shadow-[0_0_15px_rgba(0,0,0,0.5)] active:scale-95 group focus:outline-none" id="hamburgerBtn" type="button">
+<span class="w-5 h-[2px] rounded-full bg-primary mb-1.5 transition-all duration-300 group-hover:bg-primary-container group-hover:shadow-[0_0_8px_#ff71ce]"></span>
+<span class="w-3.5 h-[2px] rounded-full bg-secondary mb-1.5 transition-all duration-300 group-hover:bg-secondary-fixed group-hover:shadow-[0_0_8px_#98e1ff] self-start group-hover:self-center group-hover:w-5"></span>
+<span class="w-4.5 h-[2px] rounded-full bg-tertiary transition-all duration-300 group-hover:bg-tertiary-fixed group-hover:shadow-[0_0_8px_#00e38e] self-end group-hover:self-center group-hover:w-5"></span>
+</button>
+</header>
+<!-- Mobile Drawer & Backdrop -->
+<div aria-hidden="true" class="fixed inset-0 z-50 bg-background/85 backdrop-blur-md opacity-0 pointer-events-none invisible transition-all duration-300 md:hidden" id="drawerBackdrop"></div>
+<aside aria-label="Mobile Navigation" class="fixed top-0 right-0 bottom-0 z-50 w-[300px] max-w-[85vw] bg-surface-container-low/95 backdrop-blur-2xl border-l border-outline-variant/30 shadow-[0_0_60px_rgba(0,0,0,0.95)] flex flex-col justify-between p-6 transform translate-x-full md:hidden select-none" id="mobileDrawer">
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/20">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-lg text-primary tracking-wider font-semibold">NUSRAT'S SPACE</span>
+<span class="text-tertiary text-sm font-headline-sm">✦</span>
+</div>
+<button aria-label="Close mobile menu" class="w-8 h-8 rounded-full bg-surface-container-high/80 hover:bg-surface-variant text-on-surface flex items-center justify-center transition-all duration-200 active:scale-90 border border-outline-variant/30 focus:outline-none" id="drawerCloseBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<nav class="flex flex-col gap-2.5">
+<a class="flex items-center justify-between px-4 py-3 rounded-2xl font-label-lg text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all duration-200 group" data-path="home" href="#">
+<span class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] text-tertiary group-hover:scale-110 transition-transform">home</span>
+<span class="">Home</span>
+</span>
+<span class="material-symbols-outlined text-[16px] opacity-40">chevron_right</span>
+</a>
+<a aria-current="page" class="flex items-center justify-between px-4 py-3 rounded-2xl font-label-lg text-sm bg-primary-container text-on-primary font-bold shadow-[0_0_24px_rgba(255,113,206,0.45)] transition-all duration-200" data-path="frames" href="#">
+<span class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] text-on-primary">photo_library</span>
+<span class="">Frames</span>
+</span>
+<span class="w-2 h-2 rounded-full bg-surface shadow-[0_0_8px_#ffffff]"></span>
+</a>
+<a class="flex items-center justify-between px-4 py-3 rounded-2xl font-label-lg text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all duration-200 group" data-path="melodies" href="#">
+<span class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] text-secondary group-hover:scale-110 transition-transform">music_note</span>
+<span class="">Melodies</span>
+</span>
+<span class="material-symbols-outlined text-[16px] opacity-40">chevron_right</span>
+</a>
+<div class="h-[1px] bg-outline-variant/20 my-1"></div>
+<a class="flex items-center justify-between px-4 py-3 rounded-2xl font-label-lg text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all duration-200 group" href="#">
+<span class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] text-primary group-hover:scale-110 transition-transform">person</span>
+<span class="">Profile / Account</span>
+</span>
+<span class="material-symbols-outlined text-[16px] opacity-40">chevron_right</span>
+</a>
+</nav>
+</div>
+<div class="pt-4 border-t border-outline-variant/20 flex flex-col gap-2.5">
+<div class="flex items-center gap-2 text-primary font-label-sm text-xs">
+<span class="text-tertiary text-xs">✦</span>
+<span class="">Himu Binte Hannan</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#00e38e] animate-pulse"></span>
+<span class="font-label-sm text-[10px] text-tertiary uppercase tracking-wider font-semibold">Transmitting Live</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Stage -->
+<main class="relative z-10 w-full pt-20 sm:pt-24 md:pt-28 pb-4 sm:pb-6 flex flex-col justify-between flex-grow overflow-x-hidden overflow-y-visible">
+<div class="flex flex-col w-full relative justify-center items-center select-none py-2 my-auto overflow-y-visible">
+<!-- Ambient Dynamic Glow Orb Background -->
+<div class="pointer-events-none absolute -inset-20 sm:-inset-36 transition-all duration-1000 ease-out z-0 flex items-center justify-center" id="dynamic-ambient-backdrop">
+<div class="absolute w-[360px] sm:w-[540px] md:w-[720px] lg:w-[800px] h-[360px] sm:h-[540px] md:h-[720px] lg:h-[800px] rounded-full blur-[90px] sm:blur-[130px] md:blur-[160px] opacity-45 transition-all duration-1000 -translate-x-20 md:-translate-x-48 -translate-y-10 md:-translate-y-20" id="ambient-orb-1" style="background: radial-gradient(circle, rgb(255, 174, 220) 0%, transparent 70%);"></div>
+<div class="absolute w-[320px] sm:w-[480px] md:w-[620px] lg:w-[700px] h-[320px] sm:h-[480px] md:h-[620px] lg:h-[700px] rounded-full blur-[100px] sm:blur-[140px] md:blur-[170px] opacity-40 transition-all duration-1000 translate-x-20 md:translate-x-48 translate-y-12 md:translate-y-24" id="ambient-orb-2" style="background: radial-gradient(circle, rgb(0, 203, 252) 0%, transparent 70%);"></div>
+</div>
+<!-- Top Carousel Meta Bar -->
+<div class="relative z-10 w-full flex items-center justify-between px-1.5 sm:px-3 mb-3 sm:mb-4 max-w-[960px]">
+<div class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-surface-container-low/85 backdrop-blur-xl shadow-lg border border-outline-variant/30">
+<span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-primary-container transition-all duration-500 shadow-[0_0_10px_currentColor]" id="active-accent-dot" style="background-color: rgb(255, 174, 220); box-shadow: rgb(255, 174, 220) 0px 0px 12px;"></span>
+<span class="font-label-md text-[11px] sm:text-xs text-on-surface tracking-widest uppercase font-semibold" id="slide-counter">13 / 16</span>
+</div>
+<div class="flex items-center gap-1.5 sm:gap-2">
+<button aria-label="Toggle motion autoplay" class="flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-surface-container-low/85 hover:bg-surface-container-high/90 text-on-surface transition-all duration-300 backdrop-blur-xl shadow-md cursor-pointer group border border-outline-variant/30" id="autoplay-btn" type="button">
+<span class="material-symbols-outlined text-[15px] sm:text-[16px] text-tertiary transition-transform group-hover:scale-110" id="autoplay-icon">pause</span>
+<span class="font-label-sm text-[10px] sm:text-[11px] uppercase tracking-wider text-on-surface-variant font-medium" id="autoplay-label">Flowing</span>
+</button>
+<div class="px-2.5 py-1 rounded-full bg-surface-container-low/80 border border-outline-variant/30 text-on-surface-variant text-[11px] font-label-sm hidden sm:flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">view_carousel</span>
+<span class="" id="current-title-badge">Patterned Textured Serenity</span>
+</div>
+</div>
+</div>
+<!-- 3D Coverflow Carousel Stage (Enhanced perspective with rhythmic spacing & clear layered overlap) -->
+<div class="relative z-10 w-full my-auto py-4 sm:py-6 md:py-8 flex items-center justify-center overflow-x-hidden overflow-y-visible">
+<div class="relative w-full flex items-center justify-center overflow-y-visible [perspective:1200px] sm:[perspective:1500px] md:[perspective:1800px] [transform-style:preserve-3d]" id="carousel-stage">
+
+<!-- -3. Between Petals and Pages -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 active-card" data-color-primary="#b9eaff" data-color-secondary="#ffaedc" data-index="-3" data-title="Between Petals and Pages">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl">
+<img alt="Between Petals and Pages" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="assets/3.jpg"/>
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500"></div>
+</div>
+</div>
+<!-- -2. A Chapter Called College -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#00cbfc" data-color-secondary="#ff71ce" data-index="-2" data-title="A Chapter Called College">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl">
+<img alt="A Chapter Called College" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="assets/4.jpg"/>
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500"></div>
+</div>
+</div>
+<!-- -1. Open Book in Warm Glow -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#ffd166" data-color-secondary="#ff71ce" data-index="-1" data-title="Under the Green Canopy">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl">
+<img alt="Under the Green Canopy" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="assets/2.jpg"/>
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500"></div>
+</div>
+</div>  
+<!-- 0. Bougainvillea Blue Sky -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#ff71ce" data-color-secondary="#00cbfc" data-index="0" data-title="Bougainvillea Blue Sky" style="transform: translate3d(calc(-50% + 310px), -50%, -105px) rotateY(-24deg) scale(0.9); z-index: 20; opacity: 0.78; filter: brightness(0.78); pointer-events: auto;">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Bougainvillea Blue Sky" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDt120XtP7TNbyQG5kQX2JBmLPL6_UEihMNGQSONOB-1WD9Wp2OEj5DqZVpKfhKJRGOBbo19DN6mfI9CJqrCSKNwt-5xfxzJXx9tqAqhufPg0uYKC7zeonsfOA-wg_7pM0heGUfj6hyPFzHgnhb-ompx9UsYWWwglstjoV_tOqeBrLrms4OuW5G4iL6EN8ZivbDNnyds1mlm8AAksXymLrL5uRB8cNVNMMsYHqds6YJ8ldexCxkv0zMJEpcgSqaPmiK">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(255, 113, 206) 0px 0px 0px 2.5px inset, rgba(255, 113, 206, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 1. Window Grille Bougainvillea -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#00e38e" data-color-secondary="#ffaedc" data-index="1" data-title="Window Grille Bougainvillea" style="transform: translate3d(calc(-50% + 555px), -50%, -210px) rotateY(-24deg) scale(0.81); z-index: 10; opacity: 0.52; pointer-events: auto; filter: brightness(0.78);">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Window Grille Bougainvillea" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVwchfOts7TjDbVpCaESaTVExZBAnFjYKfObUsOt0jRpLtDn2UJLxesdN-7CNWU-vzKs8ahSyeNdhSGbPvfyX85Vyh2y_9YtB7mw-qPnJYwt6c5iSrpLx4-BQcrFysvppv3TW1vdKAOOuAU6ovbniG-jGY2qH3Y4Efnt7JeHrzdOuz0TbuWg3dAwEkDF-GJDWk5bM9Ri5YTkkQH2dJjhaf7DZQWEdM2A4dpZggWDALqEzM6ox34zJCbgU_BZpI5vpy">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(0, 227, 142) 0px 0px 0px 2.5px inset, rgba(0, 227, 142, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 2. Urban Facade with Crimson Vines -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#ff71ce" data-color-secondary="#00bd76" data-index="2" data-title="Urban Facade with Crimson Vines" style="transform: translate3d(calc(-50% + 770px), -50%, -315px) rotateY(-24deg) scale(0.72); z-index: 5; opacity: 0.32; pointer-events: auto; filter: brightness(0.78);">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Urban Facade with Crimson Vines" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_qJ8FqoX-7TcEnDXjrK90I-SYheJ_8sPNYDNYCP_NN4SZxNyQn0i4MjNgLwlfyCHhz6y8jrxLlZ2oSQ68ZiF7aG-OW0DSioGa9gbQAxllCvdcukPmFQkls7TrCfWlXcCIEdY9d2HBgryiw-ZzAHi8zoCW3hILHmHxzmjSWRrhUGmm317LXfdzzsDqGakhhXATaolgeRB-qMyoYoB5aDFxz0gElq3LLpfg3uU9pPD7FFy2WFLd4qphPYtjclZNdz7s">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(255, 113, 206) 0px 0px 0px 2.5px inset, rgba(255, 113, 206, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 3. Balcony Architectural Lines -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#ff8a50" data-color-secondary="#00cbfc" data-index="3" data-title="Balcony Architectural Lines" style="transform: translate3d(calc(-50% + 950px), -50%, -360px) rotateY(-32deg) scale(0.6); z-index: 1; opacity: 0; pointer-events: none; filter: brightness(0.78);">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Balcony Architectural Lines" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAflcbWMkGDzOhBpVmnDVNaswblr9DyAVTnHo2IERcWSL8rmTyGQK0xAS3nn1bJppjPBISSD99_-HilzTNkuVj6yLcGlmePMJxb96utpw9Ah-S61W6kkvMTaX0B0bbQ1lubMjSZtEvNdmozHlSMFl4e7RpBZlvN1jvEqt_xyb67RgKyUUpMTrBe56RgPFm4zuQNCLprIRakaTWegoCC0UjiYrpNyCCs2QwszNf-rrba9mCa5O_2IY1CHaiUgUKEgRM2">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(255, 138, 80) 0px 0px 0px 2.5px inset, rgba(255, 138, 80, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 4. Open Book in Warm Glow -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#ffd166" data-color-secondary="#ff71ce" data-index="4" data-title="Open Book in Warm Glow" style="transform: translate3d(calc(-50% + 950px), -50%, -360px) rotateY(-32deg) scale(0.6); z-index: 1; opacity: 0; pointer-events: none; filter: brightness(0.78);">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Open Book in Warm Glow" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtNqwClMaMIsXdKbq3MeefdEXTuGYD1ukyoTd9BPar6enkEEUGXmiC3I1YB2GBU_z1j_Q0ndyY-JavvE2NQen4eJDs9_jdQmpPgPcY-vQuLC4W6ubUrbVW5ye1RfVpd8UULHY8EI3fVWU4XFKiJNjqH8ze08b9V26-ufViZT_t1YOE9VBtpsBnyo5FZgWWlETnlt5fEOBlzG8u3HM-heLZmG3fauA1LkSt_eVxJ1NwXNemD8-9jGfVPDRdXzMks3I-">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(255, 209, 102) 0px 0px 0px 2.5px inset, rgba(255, 209, 102, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 5. Blooming Cottage Rooftop -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#ff7e67" data-color-secondary="#54ffaa" data-index="5" data-title="Blooming Cottage Rooftop" style="transform: translate3d(calc(-50% + 950px), -50%, -360px) rotateY(-32deg) scale(0.6); z-index: 1; opacity: 0; pointer-events: none; filter: brightness(0.78);">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Blooming Cottage Rooftop" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5vC6i9kf60IoDpAKfEV9LKzs3kCZnUI-EsB-gXzUS-c1cCHRKF8UGOK7iujIKKJ9sUYnERxM56N-IAhaicknzlFaOK_h6K9czRO8e35d_ip1LChC-UK1hQjAts7-6KjAZqGdDvrs9GLDJ5VJ4CKqndNQnO46RDTMwa78dMsrUoGnriXZlubpyykBf3h2bplVNN670Fk7MqnbO0ovJws_l46q-2maVJvk_oxuXT9eWeI78qce-uh8PrhvgNEk_lseK">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(255, 126, 103) 0px 0px 0px 2.5px inset, rgba(255, 126, 103, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 6. Spectacles Over Bengali Verse -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#00e38e" data-color-secondary="#98e1ff" data-index="6" data-title="Spectacles Over Bengali Verse" style="transform: translate3d(calc(-50% - 950px), -50%, -360px) rotateY(32deg) scale(0.6); z-index: 1; opacity: 0; pointer-events: none; filter: brightness(0.78);">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Spectacles Over Bengali Verse" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh8qzVH9x5G333z7RZJrH0HjvnDbHsOD3i3I2eB_hxhVq7EI5Y_h2GlTw6ZFgx-tDNcPzWGiF_UThEXlM28buA5MfCiRIqHGqL1gFBs4aQiv9MfYeTn-xg4OshxwOR4FiPnU07Y2N3qApZKzrapHDq8MSrnqAg84m0JyccGYwcPrMTJWMTOA97AxILpL78AuZzKNtyO80Ezl_LKfa1a_glcgCRwxwCfZhVWbG5sC1VdPmJeXBhOYdIo8OX-E_cszei">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(0, 227, 142) 0px 0px 0px 2.5px inset, rgba(0, 227, 142, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 7. Spiced Amber Citrus Infusion -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#ff9e00" data-color-secondary="#ff71ce" data-index="7" data-title="Spiced Amber Citrus Infusion" style="transform: translate3d(calc(-50% - 950px), -50%, -360px) rotateY(32deg) scale(0.6); z-index: 1; opacity: 0; filter: brightness(0.78); pointer-events: none;">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Spiced Amber Citrus Infusion" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBziOQhpjRkSV3Qy-FF0eEYf0OIrga9sY7UidFj7p1agVMWYzITN4gjgFR6lTJAnFffLw9ecFLVgf3bwVinQhGrVaauH2f-MxIKQyw0BjYDj8Bs3QzX4EzgHVnfMctOhTFvUS1sup3md5a1Ni3DACUXdeU_bwqqRHhjRKwTgRgzeIHS-_ZJ5xIni5GKJ8K1kWq4W3pQlKNDdHnYZopnbahry19Fl_cb3RV2tNREGBEnRJBNUh_okL_SsWVeJOj8XYY0">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(255, 158, 0) 0px 0px 0px 2.5px inset, rgba(255, 158, 0, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 8. Vibrant Night Fruit Market -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#ff4365" data-color-secondary="#ffd166" data-index="8" data-title="Vibrant Night Fruit Market" style="transform: translate3d(calc(-50% - 950px), -50%, -360px) rotateY(32deg) scale(0.6); z-index: 1; opacity: 0; filter: brightness(0.78); pointer-events: none;">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Vibrant Night Fruit Market" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQLKrpztkKK9ewR3mV1_HsM_CxtOp1z-3uzajlQKOzyGBCkuWbxqlyzrDQKz-Coa6VAPnUHILiYUyem4B9hwmQwzkaj2G_FQ-tuLbrp3BQlQxKKpvgkumnXFW4PbuihdPxWEnSQ2-2eSMkMff07hY_B9awqT22OZFhi5TlSboNhlvai0EGMW7xmaWPIsk2P59d8-RQpmVnjS5rAyqyFZWGYO3BaIY8Row1ZPkrloMaujfVQ6SKI5K6r79KVKlpwSYz">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(255, 67, 101) 0px 0px 0px 2.5px inset, rgba(255, 67, 101, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 9. Midnight Desk Study & Neon -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#00cbfc" data-color-secondary="#ff71ce" data-index="9" data-title="Midnight Desk Study &amp; Neon" style="transform: translate3d(calc(-50% - 770px), -50%, -315px) rotateY(24deg) scale(0.72); z-index: 5; opacity: 0.32; filter: brightness(0.78); pointer-events: auto;">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Midnight Desk Study &amp; Neon" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjbciopAixZHl7YtVtfK37luWdViRMf4ljGxfZv7au3jzsRW7HPv-hIDja20Bd0W3apWGFwt98RdN9H_QDyzFcSo-DODFToFnaq_lXZigp-fCRhKEiWAwcJIjItyyqzCYVkYOc7OOSYwnuznzmW1VSYluIGgtkMjgPKSsXd_wW4rgj0ipf1JZz3F6FNQN7-WbNNAMZJ8beS58gX-HR-kDHUnBKHgYl0eqC-mkdIuXDfCtQCCbasZsK8VWw6r_oYVOK">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(0, 203, 252) 0px 0px 0px 2.5px inset, rgba(0, 203, 252, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 10. Persian Cat Portrait -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#b9eaff" data-color-secondary="#ffaedc" data-index="10" data-title="Persian Cat Portrait" style="transform: translate3d(calc(-50% - 555px), -50%, -210px) rotateY(24deg) scale(0.81); z-index: 10; opacity: 0.52; filter: brightness(0.78); pointer-events: auto;">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Persian Cat Portrait" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMf8I-8fg9kFXvGz9wId4IiVBWxkVOg_50USZ-mrAYkxtdqsuWcsvNzE7sf7Xe7I08MWe87r-yPme7GiYC3ynL5WeTrw2ioP_wY1Ejr_9PfcnBsrlEcMlSuwT_OPvO34jCtUQ0pMid9he0XPGJwLZrWwOknmnCdS-DNZef2tYP7mgPA1_un3jQYXtdaA06OJO_IVWFvHR4A5xMyr5i7uBa1N6D_Y3YuL8ZBBRgDrifK5OzpHAqo0bG_3Uo3ZitDEYV">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-100 transition-opacity duration-500" style="box-shadow: rgb(185, 234, 255) 0px 0px 0px 2.5px inset, rgba(185, 234, 255, 0.6) 0px 0px 24px inset; opacity: 0;"></div>
+</div>
+</div>
+<!-- 11. Medical College Blossoms -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" data-color-primary="#a72683" data-color-secondary="#54ffaa" data-index="11" data-title="Medical College Blossoms" style="transform: translate3d(calc(-50% - 310px), -50%, -105px) rotateY(24deg) scale(0.9); z-index: 20; opacity: 0.78; filter: brightness(0.78); pointer-events: auto;">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.75) 0px 14px 34px;">
+<img alt="Medical College Blossoms" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTe5SPMS4Qq9CPOV1cx0cHVzMhdW8xid6ZzhkxcRP2xxX6MEI-psdzYgO1pFaGlX2BwDiZUc94xqMf01xY3SHV6Jmap-fC0Emhfyz4AcJUCL8ADOtUpzQIvg4ZdlQSGWVGv47-NP9OVycPS9I6X82_mzvrDQZp_WIjcNg9lEVTw91kZWfXWNI5bZoth_ZW3VINgDftYfimnwmvJqTvRRRXGARnWffirFGUCabLvFZYr1cYx4Q3yFj_vaXfnCX-rxQO">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 0; box-shadow: rgb(167, 38, 131) 0px 0px 0px 2.5px inset, rgba(167, 38, 131, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+<!-- 12. Patterned Textured Serenity -->
+<div class="carousel-item absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 active-card" data-color-primary="#ffaedc" data-color-secondary="#00cbfc" data-index="12" data-title="Patterned Textured Serenity" style="transform: translate3d(calc(-50% + 0px), -50%, 120px) rotateY(0deg) scale(1.07); z-index: 30; opacity: 1; filter: brightness(1); pointer-events: auto;">
+<div class="card-inner relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl" style="box-shadow: rgb(255, 174, 220) 0px 0px 44px, rgba(255, 113, 206, 0.45) 0px 0px 20px inset, rgba(0, 0, 0, 0.9) 0px 26px 54px -10px; transform: none;">
+<img alt="Patterned Textured Serenity" class="pointer-events-none select-none rounded-2xl sm:rounded-3xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsdTxzqNr8KPi0X-ksKT0S4IUrCrCFf5yc-9bFCSHZEf1GG-zrssh1t6fG5arOc0ciZAn9uoyWTeMxV0q33w33mhXMCn9lOCkGsAIyHh6VYRqhycMFEJg3VZdu2bRphOuK-tDdBznHHpA3sg1AIIfcOTGpK6xST653Tv9wRjfjXPpm1PshzsMMV2xjmk61k9ocxpnWF5grVF4tep2C6y5Zkdmj649fx8m-TWanK_FrmjQNNUz7TIH3dTNTrGi6bIiF">
+<div class="glow-border pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-500" style="opacity: 1; box-shadow: rgb(255, 174, 220) 0px 0px 0px 2.5px inset, rgba(255, 174, 220, 0.6) 0px 0px 24px inset;"></div>
+</div>
+</div>
+</div>
+<!-- Navigation Buttons -->
+<button aria-label="Previous image" class="absolute left-1 sm:left-3 md:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-surface-container-low/85 hover:bg-surface-container-high/90 text-on-surface flex items-center justify-center backdrop-blur-xl shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer border border-outline-variant/30" id="prev-btn" type="button">
+<span class="material-symbols-outlined text-[20px] sm:text-[24px] md:text-[28px]">arrow_back</span>
+</button>
+<button aria-label="Next image" class="absolute right-1 sm:right-3 md:right-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-surface-container-low/85 hover:bg-surface-container-high/90 text-on-surface flex items-center justify-center backdrop-blur-xl shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer border border-outline-variant/30" id="next-btn" type="button">
+<span class="material-symbols-outlined text-[20px] sm:text-[24px] md:text-[28px]">arrow_forward</span>
+</button>
+</div>
+<!-- Pagination & Controls (Directly Under Carousel) -->
+<div class="relative z-20 w-full flex flex-col items-center gap-1.5 pt-3 sm:pt-4 pb-1">
+<div class="relative max-w-[96vw] mx-auto px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-surface-container-low/85 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] border border-outline-variant/30 flex items-center justify-center">
+<div class="flex items-center gap-1.5 sm:gap-2 flex-nowrap" id="dots-container"><button type="button" aria-label="Navigate to slide 4: Balcony Architectural Lines" class="dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0 opacity-40 hover:opacity-100 hover:bg-white/60" data-index="3" style="width: 0.625rem; background-color: rgba(255, 255, 255, 0.25); box-shadow: none;"></button><button type="button" aria-label="Navigate to slide 5: Open Book in Warm Glow" class="dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0 opacity-40 hover:opacity-100 hover:bg-white/60" data-index="4" style="width: 0.625rem; background-color: rgba(255, 255, 255, 0.25); box-shadow: none;"></button><button type="button" aria-label="Navigate to slide 6: Blooming Cottage Rooftop" class="dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0 opacity-40 hover:opacity-100 hover:bg-white/60" data-index="5" style="width: 0.625rem; background-color: rgba(255, 255, 255, 0.25); box-shadow: none;"></button><button type="button" aria-label="Navigate to slide 7: Spectacles Over Bengali Verse" class="dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0 opacity-40 hover:opacity-100 hover:bg-white/60" data-index="6" style="width: 0.625rem; background-color: rgba(255, 255, 255, 0.25); box-shadow: none;"></button><button type="button" aria-label="Navigate to slide 8: Spiced Amber Citrus Infusion" class="dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0 opacity-40 hover:opacity-100 hover:bg-white/60" data-index="7" style="width: 0.625rem; background-color: rgba(255, 255, 255, 0.25); box-shadow: none;"></button><button type="button" aria-label="Navigate to slide 9: Vibrant Night Fruit Market" class="dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0 opacity-40 hover:opacity-100 hover:bg-white/60" data-index="8" style="width: 0.625rem; background-color: rgba(255, 255, 255, 0.25); box-shadow: none;"></button><button type="button" aria-label="Navigate to slide 10: Midnight Desk Study &amp; Neon" class="dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0 opacity-40 hover:opacity-100 hover:bg-white/60" data-index="9" style="width: 0.625rem; background-color: rgba(255, 255, 255, 0.25); box-shadow: none;"></button><button type="button" aria-label="Navigate to slide 11: Persian Cat Portrait" class="dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0 opacity-40 hover:opacity-100 hover:bg-white/60" data-index="10" style="width: 0.625rem; background-color: rgba(255, 255, 255, 0.25); box-shadow: none;"></button><button type="button" aria-label="Navigate to slide 12: Medical College Blossoms" class="dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0 opacity-40 hover:opacity-100 hover:bg-white/60" data-index="11" style="width: 0.625rem; background-color: rgba(255, 255, 255, 0.25); box-shadow: none;"></button><button type="button" aria-label="Navigate to slide 13: Patterned Textured Serenity" class="dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0 opacity-100" data-index="12" style="width: 1.4rem; background-color: rgb(255, 174, 220); box-shadow: rgb(255, 174, 220) 0px 0px 10px, rgba(255, 174, 220, 0.533) 0px 0px 18px;"></button></div>
+</div>
+<div class="flex items-center justify-center gap-2 sm:gap-3 text-on-surface-variant/75 font-label-sm text-[10px] sm:text-[11px] tracking-wider uppercase w-fit max-w-[92vw] text-center mx-auto px-3.5 sm:px-5 py-1 rounded-full bg-surface-container-low/75 border border-outline-variant/30 backdrop-blur-xl shadow-md mt-0.5 sm:mt-1">
+<span class="flex items-center gap-1 text-primary font-semibold">
+<span class="material-symbols-outlined text-[13px] sm:text-[14px] text-tertiary">touch_app</span>
+<span class="hidden sm:inline">Click dot or card to highlight</span>
+<span class="sm:hidden">Tap card or dot</span>
+</span>
+<span class="opacity-40">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] sm:text-[13px]">swipe</span>
+<span class="">Swipe</span>
+</span>
+<span class="opacity-40 hidden sm:inline">•</span>
+<span class="hidden sm:flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">keyboard</span>
+<span class="">Arrow Keys</span>
+</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-lowest/85 backdrop-blur-xl relative mt-space-lg sm:mt-space-xl border-t border-white/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-margin py-6 sm:py-space-xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+<div class="flex flex-col items-center sm:items-start gap-1">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-base sm:text-headline-sm tracking-wide text-on-surface font-bold">HIMU BINTE HANNAN</span>
+<span class="text-secondary text-base sm:text-headline-sm">✦</span>
+</div>
+
+</div>
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container-high/60 backdrop-blur-md text-tertiary font-label-sm text-xs shadow-[0_0_20px_rgba(0,227,142,0.15)] border border-tertiary/20">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
+<span> TRANSMITTING LIVE</span>
+</div>
+<div class="flex flex-col items-center sm:items-end gap-1 text-center sm:text-right">
+<span class="font-label-md text-xs sm:text-label-md text-on-surface-variant">• Made with ♥ for Nusrat</span>
+<span class="font-body-sm text-[11px] sm:text-body-sm text-outline">© 2025 Nusrat. All nocturnal rights reserved.</span>
+</div>
+</div>
+</footer>
+<!-- Interactive Coverflow Engine Script with Fine-Tuned Spacing & Overlap -->
+<script>
+  (function() {
+    const items = Array.from(document.querySelectorAll('.carousel-item'));
+    const total = items.length;
+    let currentIndex = 10; // Start at Persian Cat Portrait default
+    let isAutoplay = true;
+    let autoplayTimer = null;
+
+    const stage = document.getElementById('carousel-stage');
+    const orb1 = document.getElementById('ambient-orb-1');
+    const orb2 = document.getElementById('ambient-orb-2');
+    const counter = document.getElementById('slide-counter');
+    const accentDot = document.getElementById('active-accent-dot');
+    const currentTitleBadge = document.getElementById('current-title-badge');
+    const dotsContainer = document.getElementById('dots-container');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const autoplayBtn = document.getElementById('autoplay-btn');
+    const autoplayIcon = document.getElementById('autoplay-icon');
+    const autoplayLabel = document.getElementById('autoplay-label');
+
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const drawerCloseBtn = document.getElementById('drawerCloseBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+
+    function openDrawer(e) {
+      if (e) e.preventDefault();
+      if (!mobileDrawer || !drawerBackdrop) return;
+      drawerBackdrop.classList.remove('invisible', 'pointer-events-none');
+      drawerBackdrop.classList.add('opacity-100');
+      mobileDrawer.classList.remove('translate-x-full');
+      mobileDrawer.classList.add('translate-x-0');
+      if (hamburgerBtn) hamburgerBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer(e) {
+      if (e) e.preventDefault();
+      if (!mobileDrawer || !drawerBackdrop) return;
+      drawerBackdrop.classList.remove('opacity-100');
+      drawerBackdrop.classList.add('opacity-0');
+      mobileDrawer.classList.remove('translate-x-0');
+      mobileDrawer.classList.add('translate-x-full');
+      if (hamburgerBtn) hamburgerBtn.setAttribute('aria-expanded', 'false');
+      setTimeout(() => {
+        drawerBackdrop.classList.add('invisible', 'pointer-events-none');
+        document.body.style.overflow = '';
+      }, 320);
+    }
+
+    if (hamburgerBtn) {
+      hamburgerBtn.addEventListener('click', openDrawer);
+      hamburgerBtn.addEventListener('touchend', (e) => { e.preventDefault(); openDrawer(); });
+    }
+    if (drawerCloseBtn) {
+      drawerCloseBtn.addEventListener('click', closeDrawer);
+      drawerCloseBtn.addEventListener('touchend', (e) => { e.preventDefault(); closeDrawer(); });
+    }
+    if (drawerBackdrop) {
+      drawerBackdrop.addEventListener('click', closeDrawer);
+      drawerBackdrop.addEventListener('touchend', (e) => { e.preventDefault(); closeDrawer(); });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileDrawer && !mobileDrawer.classList.contains('translate-x-full')) {
+        closeDrawer();
+      }
+    });
+
+    // Pagination Dots: window of max 10 dots
+    function renderPaginationDots() {
+      if (!dotsContainer) return;
+      dotsContainer.innerHTML = '';
+      
+      const maxDots = 10;
+      const windowSize = Math.min(total, maxDots);
+      let start = Math.max(0, Math.min(currentIndex - Math.floor(windowSize / 2), total - windowSize));
+      let end = start + windowSize;
+
+      const width = window.innerWidth;
+      const isMobile = width < 641;
+      const currentPrimary = items[currentIndex].dataset.colorPrimary || '#ffaedc';
+
+      for (let i = start; i < end; i++) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Navigate to slide ${i + 1}: ${items[i].dataset.title || ''}`);
+        dot.className = 'dot-pill group relative h-2 sm:h-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer focus:outline-none flex-shrink-0';
+        dot.dataset.index = i;
+
+        if (i === currentIndex) {
+          dot.style.width = isMobile ? '1.2rem' : '1.4rem';
+          dot.style.backgroundColor = currentPrimary;
+          dot.style.boxShadow = `0 0 10px ${currentPrimary}, 0 0 18px ${currentPrimary}88`;
+          dot.classList.add('opacity-100');
+        } else {
+          dot.style.width = isMobile ? '0.45rem' : '0.625rem';
+          dot.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
+          dot.style.boxShadow = 'none';
+          dot.classList.add('opacity-40', 'hover:opacity-100', 'hover:bg-white/60');
+        }
+
+        const handleSelect = (e) => {
+          e.stopPropagation();
+          goToSlide(i);
+        };
+        dot.addEventListener('click', handleSelect);
+        dot.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          goToSlide(i);
+        });
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function updateCarousel() {
+      const width = window.innerWidth;
+      const isMobile = width < 641;
+      const isTablet = width >= 641 && width < 1024;
+      
+      // Adjusted horizontal offsets for more breathing room while preserving ~25% harmonious 3D overlap:
+      // Desktop: active card ~420-480px wide. Step 1 at 310px leaves ~25-30% overlap with beautiful depth.
+      const step1 = isMobile ? 155 : (isTablet ? 245 : 310);
+      const step2 = isMobile ? 275 : (isTablet ? 435 : 555);
+      const step3 = isMobile ? 380 : (isTablet ? 600 : 770);
+
+      items.forEach((item, index) => {
+        let offset = index - currentIndex;
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
+
+        const absOffset = Math.abs(offset);
+        const sign = Math.sign(offset);
+        const inner = item.querySelector('.card-inner');
+        const glow = item.querySelector('.glow-border');
+
+        if (absOffset === 0) {
+          item.classList.add('active-card');
+          const centerZ = isMobile ? 60 : (isTablet ? 90 : 120);
+          const centerScale = isMobile ? 1.02 : (isTablet ? 1.05 : 1.07);
+          item.style.transform = `translate3d(calc(-50% + 0px), -50%, ${centerZ}px) rotateY(0deg) scale(${centerScale})`;
+          item.style.zIndex = '30';
+          item.style.opacity = '1';
+          item.style.filter = 'brightness(1)';
+          item.style.pointerEvents = 'auto';
+          
+          const primaryColor = item.dataset.colorPrimary || '#ffaedc';
+          const secondaryColor = item.dataset.colorSecondary || '#00cbfc';
+
+          inner.style.transform = 'none';
+          const glowSpread = isMobile ? '28px' : (isTablet ? '36px' : '44px');
+          const glowInset = isMobile ? '12px' : (isTablet ? '16px' : '20px');
+          inner.style.boxShadow = `0 0 ${glowSpread} ${primaryColor}, inset 0 0 ${glowInset} rgba(255, 113, 206, 0.45), 0 26px 54px -10px rgba(0,0,0,0.9)`;
+          if (glow) {
+            glow.style.opacity = '1';
+            glow.style.boxShadow = `inset 0 0 0 2.5px ${primaryColor}, inset 0 0 24px ${primaryColor}99`;
+          }
+
+          if (orb1 && orb2) {
+            orb1.style.background = `radial-gradient(circle, ${primaryColor} 0%, transparent 70%)`;
+            orb2.style.background = `radial-gradient(circle, ${secondaryColor} 0%, transparent 70%)`;
+          }
+          if (accentDot) {
+            accentDot.style.backgroundColor = primaryColor;
+            accentDot.style.boxShadow = `0 0 12px ${primaryColor}`;
+          }
+          if (currentTitleBadge) {
+            currentTitleBadge.textContent = item.dataset.title || 'Curated Frame';
+          }
+        } else if (absOffset <= 3) {
+          item.classList.remove('active-card');
+          let transX = 0;
+          if (absOffset === 1) transX = sign * step1;
+          else if (absOffset === 2) transX = sign * step2;
+          else transX = sign * step3;
+
+          // Slightly gentler rotation angle so side artwork remains clearer and layered naturally
+          const rotateY = -sign * (isMobile ? 18 : (isTablet ? 22 : 24));
+          const scale = absOffset === 1 ? (isMobile ? 0.88 : 0.90) : (absOffset === 2 ? (isMobile ? 0.78 : 0.81) : (isMobile ? 0.68 : 0.72));
+          const transZ = -absOffset * (isMobile ? 55 : (isTablet ? 85 : 105));
+          const zIndex = absOffset === 1 ? 20 : (absOffset === 2 ? 10 : 5);
+          const opacity = isMobile && absOffset > 1 ? 0.25 : (absOffset === 1 ? 0.78 : (absOffset === 2 ? 0.52 : 0.32));
+
+          item.style.transform = `translate3d(calc(-50% + ${transX}px), -50%, ${transZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+          item.style.zIndex = String(zIndex);
+          item.style.opacity = String(opacity);
+          item.style.filter = 'brightness(0.78)';
+          item.style.pointerEvents = 'auto';
+
+          inner.style.transform = '';
+          inner.style.boxShadow = '0 14px 34px rgba(0,0,0,0.75)';
+          if (glow) glow.style.opacity = '0';
+        } else {
+          item.classList.remove('active-card');
+          item.style.transform = `translate3d(calc(-50% + ${sign * (step3 + 180)}px), -50%, -360px) rotateY(${-sign * 32}deg) scale(0.6)`;
+          item.style.zIndex = '1';
+          item.style.opacity = '0';
+          item.style.pointerEvents = 'none';
+          inner.style.transform = '';
+          if (glow) glow.style.opacity = '0';
+        }
+      });
+
+      if (counter) {
+        counter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+      }
+
+      renderPaginationDots();
+    }
+
+    function goToSlide(index) {
+      currentIndex = ((index % total) + total) % total;
+      updateCarousel();
+      resetAutoplay();
+    }
+
+    window.goToSlide = goToSlide;
+
+    function nextSlide() {
+      goToSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+      goToSlide(currentIndex - 1);
+    }
+
+    function resetAutoplay() {
+      if (autoplayTimer) clearInterval(autoplayTimer);
+      if (isAutoplay) {
+        autoplayTimer = setInterval(nextSlide, 4500);
+      }
+    }
+
+    function toggleAutoplay() {
+      isAutoplay = !isAutoplay;
+      if (isAutoplay) {
+        autoplayIcon.textContent = 'pause';
+        autoplayLabel.textContent = 'Flowing';
+        resetAutoplay();
+      } else {
+        autoplayIcon.textContent = 'play_arrow';
+        autoplayLabel.textContent = 'Paused';
+        if (autoplayTimer) clearInterval(autoplayTimer);
+      }
+    }
+
+    items.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(item.dataset.index, 10);
+        goToSlide(idx);
+      });
+    });
+
+    if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); });
+    if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); });
+    if (autoplayBtn) autoplayBtn.addEventListener('click', toggleAutoplay);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === ' ') {
+        e.preventDefault();
+        toggleAutoplay();
+      }
+    });
+
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+    let isSwiping = false;
+
+    stage.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      isDragging = true;
+    });
+
+    window.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      const diff = e.clientX - startX;
+      if (Math.abs(diff) > 35) {
+        if (diff > 0) prevSlide();
+        else nextSlide();
+      }
+      isDragging = false;
+    });
+
+    stage.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 0) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isSwiping = true;
+      }
+    }, { passive: true });
+
+    stage.addEventListener('touchmove', (e) => {
+      if (!isSwiping || e.touches.length === 0) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = Math.abs(currentX - startX);
+      const diffY = Math.abs(currentY - startY);
+      if (diffX > diffY && diffX > 10) {
+        if (e.cancelable) e.preventDefault();
+      }
+    }, { passive: false });
+
+    stage.addEventListener('touchend', (e) => {
+      if (!isSwiping) return;
+      if (e.changedTouches.length > 0) {
+        const endX = e.changedTouches[0].clientX;
+        const diff = endX - startX;
+        if (Math.abs(diff) > 35) {
+          if (diff > 0) prevSlide();
+          else nextSlide();
+        }
+      }
+      isSwiping = false;
+    }, { passive: true });
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updateCarousel, 60);
+    });
+    window.addEventListener('orientationchange', () => {
+      setTimeout(updateCarousel, 120);
+    });
+
+    updateCarousel();
+    resetAutoplay();
+  })();
+  </script>
+
+
+</body></html>
